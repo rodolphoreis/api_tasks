@@ -44,6 +44,24 @@ app.put("/task/:id", (req: Request, res: Response) => {
   return res.status(200).json(tasks[index]);
 });
 
+app.patch("/task/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { text, isCompleted } = req.body;
+  const intID = parseInt(id);
+
+  const index = tasks.findIndex((task) => {
+    return task.id === intID;
+  });
+
+  const payload: Task = {
+    id: intID || tasks[index].id,
+    text: text || tasks[index].text,
+    isCompleted: isCompleted || tasks[index].isCompleted,
+  };
+  tasks[index] = payload;
+  return res.status(200).json(tasks[index]);
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
