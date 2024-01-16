@@ -62,6 +62,18 @@ app.patch("/task/:id", (req: Request, res: Response) => {
   return res.status(200).json(tasks[index]);
 });
 
+app.delete("/task/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const intID = parseInt(id);
+
+  const index = tasks.findIndex((task) => {
+    return task.id === intID;
+  });
+
+  tasks.splice(index, 1);
+  return res.sendStatus(204);
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
