@@ -19,6 +19,7 @@ content-type: application/json
   "text": "Reis"
 }
 
+####
 PATCH http://localhost:3000/task/4
 content-type: application/json
 
@@ -26,3 +27,9 @@ content-type: application/json
   "text": "euu",
   "isCompleted": true
 }
+
+####
+
+DELETE http://localhost:3000/task/2
+
+
