@@ -3,11 +3,7 @@ import express, { Request, Response } from "express";
 const app = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
-type Task = {
-  id: number;
-  text: string;
-  isCompleted: boolean;
-};
+
 let tasks: Task[] = [];
 
 function findIndexByID(id: number): number {
