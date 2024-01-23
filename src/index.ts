@@ -1,17 +1,11 @@
 import express, { Request, Response } from "express";
+import { findIndexByID } from "./utils";
 
 const app = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
 
 let tasks: Task[] = [];
-
-function findIndexByID(id: number): number {
-  const index = tasks.findIndex((task) => {
-    return task.id === id;
-  });
-  return index;
-}
 
 app.get("/task", (req, res) => {
   return res.status(200).json(tasks);
@@ -34,7 +28,7 @@ app.put("/task/:id", (req: Request, res: Response) => {
   const { text } = req.body;
   const intID = parseInt(id);
 
-  const index = findIndexByID(intID);
+  const index = findIndexByID(tasks, intID);
 
   const payload: Task = {
     id: intID,
@@ -51,7 +45,7 @@ app.patch("/task/:id", (req: Request, res: Response) => {
   const { text, isCompleted } = req.body;
   const intID = parseInt(id);
 
-  const index = findIndexByID(intID);
+  const index = findIndexByID(tasks, intID);
 
   const payload: Task = {
     id: intID || tasks[index].id,
@@ -66,7 +60,7 @@ app.delete("/task/:id", (req: Request, res: Response) => {
   const { id } = req.params;
   const intID = parseInt(id);
 
-  const index = findIndexByID(intID);
+  const index = findIndexByID(tasks, intID);
 
   tasks.splice(index, 1);
   return res.sendStatus(204);
